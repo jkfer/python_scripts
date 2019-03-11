@@ -1,0 +1,9 @@
+Task: This is to practive parsing through file contents and changing specific values using python
+
+1. find the *.conf files within the /etc/httpd/ directory
+2. within each of those files find the specific virtual host
+3. replace the document root in the file with the given document root
+
+# In this code we output the result to stdout. 
+
+# Next improvement will be to pemanently write the change to the file.
