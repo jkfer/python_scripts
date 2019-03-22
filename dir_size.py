@@ -1,13 +1,15 @@
 #!/usr/bin/python
 
 # This is a script to list the contents of a directory, and its contents sizes:
+# using pip hurry.filesize to indicate readable unit for size. Else all will be bytes. 
 
 import os
 import sys
+from hurry.filesize import size
    
 
 def list_item(dir):
-    dir_size = os.stat(dir).st_size
+    dir_size = size(os.stat(dir).st_size)
     print('%s, %s \n' % (dir_size, dir))
     for roots, paths, files in os.walk(dir):
         if roots == dir:
@@ -15,12 +17,12 @@ def list_item(dir):
             
             for file in files:
                 abs_path_file = os.path.join(roots, file)
-                size_file = os.stat(abs_path_file).st_size
+                size_file = size(os.stat(abs_path_file).st_size)
                 print('%s, %s' % (size_file, abs_path_file))
             
             for path in paths:
                 abs_path = os.path.join(roots, path)
-                size_path = os.stat(abs_path).st_size
+                size_path = size(os.stat(abs_path).st_size)
                 print('%s, %s' % (size_path, abs_path))
         
 
