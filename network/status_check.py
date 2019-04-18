@@ -1,10 +1,11 @@
 #!/usr/bin/python
 
-# check for specific services listening on specified ports of various hosts in the network
-# Assuming all the services are using the default ports. else the dict values will need to be modified
+# check for specific ports listening on various hosts in the network
+# Assuming all the services are using the default ports. 
+# else the dict values will need to be modified
 #
-# Useful to check availability of services over the network and
-# goal = Scale to email results and link script to cron schedule for monitoring.
+# Useful to check port availability of hosts over the network and associate it with service on the port
+# goal = Scale to email results and link script to cron schedule
 
 
 # converting this to have email notifications incorporated.
