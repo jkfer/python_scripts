@@ -19,12 +19,6 @@ if not os.path.isfile(filename):
     sys.exit(1)
 
 
-# define function to GREP each line in a file using grep itself
-#def grep_lines(filename, query_file):
-#    with open(query_file, "rb") as myfile:
-#        for line in myfile:
-#            subprocess.call(["/bin/grep", line.strip(), filename])
-
 
 print('finding each line of %s in %s' % (query_file, filename))
 
