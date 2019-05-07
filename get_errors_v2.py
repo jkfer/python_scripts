@@ -26,10 +26,15 @@ def find_errors(filename, filepath):
             new_file = os.path.join(path, file_match)   
             print(seperator)
             
+	    
             # Look for 'error' or 'Error' in the new file: 
-            for line in open(new_file).readlines():
-                if ('error' or 'Error') in line:
-                    print(line)
+            with open(new_file, 'r') as f:
+		lines = f.readlines()
+
+	    for line in lines:
+		    if ('error' or 'Error') in line:
+			    print(line)
+	    
 
 
 if __name__ == '__main__':
