@@ -3,9 +3,24 @@
 # Sample script model to scrape data from webpage and insert into MySQL DB
 # Planning for other project
 # movies db and the table 'top_100' is already defined in the backend
-# add - error handling 
+# adding - error handling with try and except
+
+"""
+Sample of top_100 table def:
+
+MariaDB [movies]> desc top_100;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| id           | int(11)      | NO   | PRI | 0       |       |
+| name         | varchar(50)  | YES  |     | NULL    |       |
+| rating       | decimal(2,1) | YES  |     | NULL    |       |
+| plot_summary | varchar(500) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+"""
 
 
+import sys
 import requests
 import bs4
 import MySQLdb
@@ -43,11 +58,22 @@ def get_movInfo():
 
 # insert info into DB
 def insert_to_DB():
-	src = MySQLdb.connect(user='root', passwd='123456', host='mysql', db='movies')
+	username='root'
+	password='123456'
+	hostname='mysql'
+	database='movies'
+
+	# exit if you cannot connect to db
+	try:
+		src = MySQLdb.connect(user=username, passwd=password, host=hostname, db=database)
+	except:
+		print('Unable to connect to database.')
+		sys.exit()
+
 	c = src.cursor()
 	
 	query = "INSERT INTO top_100 (id, name, rating, plot_summary) VALUES ('%s', '%s', '%s', '%s');"
-
+	
 	for detail in movie_in:
 		ID = detail[0]
 		title = detail[1]
@@ -58,9 +84,13 @@ def insert_to_DB():
 		# handling of special charachters inmovie title and plot summary
 		new_title = str(MySQLdb.escape_string(title))
 		new_plot_sum = str(MySQLdb.escape_string(plot_sum))
-	
 		print(query % (ID, new_title, rating, new_plot_sum))
-		c.execute(query % (ID, new_title, rating, new_plot_sum))
+		
+		# Try to execute query
+		try:
+			c.execute(query % (ID, new_title, rating, new_plot_sum))
+		except:
+			print('Failed to insert %s, %s, %s, %s into table top_100 of %s database' % (ID, new_title, rating, new_plot_sum, database))
 
 	
 	src.commit()
